@@ -1,0 +1,205 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                         String                @id @default(auto()) @map("_id") @db.ObjectId
+  email                      String
+  password                   String
+  name                       String
+  createdNavbar              Navbar[]
+  createdHomepagelabel       Homepagelabel[]
+  createdTour                Tour[]
+  createdSlider              Slider[]
+  createdHottour             Hottour[]
+  createdOurrating           Ourrating[]
+  createdMaintour            Maintour[]
+  createdDemandedtour        Demandedtour[]
+  createdCity                City[]
+  createdBookingpagelabel    Bookingpagelabel[]
+  createdAboutpageprogress   Aboutpageprogress[]
+  createdTourdetailpagelabel Tourdetailpagelabel[]
+  createdCollectionimages    Collectionimages[]
+  createdFooter              Footer[]
+}
+
+model Navbar {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  route    String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Homepagelabel {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  label    String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Slider {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  image    String
+  btn_text String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Hottour {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  descr    String
+  image    String
+  btn_text String
+  btn_url  String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Ourrating {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  rating   String
+  title    String
+  descr    String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Maintour {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  descr    String
+  image    String
+  btn_text String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Demandedtour {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  descr    String
+  image    String
+  btn_text String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model City {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  name     String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Tour {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  lang             String
+  name             String
+  city             String
+  hotel            String
+  transport_depart String
+  transport_arrive String
+  price            String
+  btn_text         String
+  user             User     @relation(fields: [authorId], references: [id])
+  authorId         String   @db.ObjectId
+  registeredAt     DateTime @default(now())
+}
+
+model Bookingpagelabel {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  lang               String
+  adults             String
+  children           String
+  rooms              String
+  inputPlaceholder   String
+  checkIn            String
+  checkOut           String
+  btn_text           String
+  childrenAge        String
+  table_headings     String
+  childAgeText       String
+  requiredFieldsMsg  String
+  specifyChildAgeMsg String
+  user               User   @relation(fields: [authorId], references: [id])
+  authorId           String @db.ObjectId
+}
+
+model Tourdetailpagelabel {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  lang             String
+  tableHead        String
+  tableData        String
+  formPlaceholders String
+  btn_text         String
+  onFormSuccess    String
+  onFormError      String
+  user             User   @relation(fields: [authorId], references: [id])
+  authorId         String @db.ObjectId
+}
+
+model Aboutpageprogress {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  title    String
+  percent  String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
+
+model Booking {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  email            String
+  phone            String
+  name             String
+  city             String
+  hotel            String
+  transport_depart String
+  transport_arrive String
+  selectedCity     String
+  checkin          String
+  checkout         String
+  rooms            String
+  adults           String
+  children         String
+  childageArr      String
+  isValid          String
+  registeredAt     DateTime @default(now())
+}
+
+model Collectionimages {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  folder     String
+  image_name String
+  user       User   @relation(fields: [authorId], references: [id])
+  authorId   String @db.ObjectId
+}
+
+model Footer {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  lang     String
+  heading  String
+  links    String
+  info     String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+}
